@@ -16,6 +16,10 @@
     <%= yield %>
 
    </div> 
+
+   <small class="primary">
+   <%= flash[:notice] || flash[:alert] %>
+   </small>
   </body>
   
 </html>

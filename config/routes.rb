@@ -6,4 +6,6 @@ Rails.application.routes.draw do
 
   get('/pmtool/about', {to:"pmtool#about"})
 
+  resources :projects
+
 end

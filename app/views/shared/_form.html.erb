@@ -1,0 +1,27 @@
+<%= form_with model:@project, :class=>"form-group", local: true do |form| %>
+        <% if @project.errors.present? %>
+        <%= @project.errors.full_messages.join(', ')%>
+        <% end %>
+        <div class="mt-4">
+            <%= label_tag :title%>
+            <div class="input-group">
+                <%= form.text_field :title, :class=>'form-control'%>
+             </div>
+        </div>
+
+        <div class="mt-4">
+            <%= label_tag :description %>
+            <div class="input-group">
+                <%= form.text_area :description, cols:50 , rows:5,  :class=>'form-control'%>
+             </div>
+        </div>
+        <div class="mt-4">
+            <%= label_tag :due_date %>
+            <div class="input-group">
+                <%= form.text_field :price, :class=>'form-control' %>
+             </div>             
+             <br>
+        </div>
+           <%=form.submit :Submit, class: "btn btn-primary"%>
+            <% end %>
+            <br><br>
