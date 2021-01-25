@@ -1,7 +1,9 @@
 class DiscussionsController < ApplicationController
     
-    before_action :authorize_user!,only:[:edit,:update,:destroy]
+    
     before_action :authenticate_user!, except: [:index, :show]
+    before_action :authorize_user!, only:[:edit,:update,:destroy]
+
     def new
         @dicussion = Dicussion.new
 
@@ -31,15 +33,26 @@ class DiscussionsController < ApplicationController
 
     end
 
+    def edit
+        @project = Project.find params[:project_id]
+        @tasks = @project.tasks.order(created_at: :DESC)
+        @tasks_pie=@project.tasks.group(:completed)
+        @completed = @tasks_pie.count[true]
+        @inprogress= @tasks_pie.count[false]
+
+    end
+
+    def update
+        if @discussion.update discussion_params
+        redirect_to project_discussions_path(@project.id)
+        else 
+            render :edit
+        end
+    end
 
     def destroy
-        @project = Project.find params[:project_id]
-        @discussion = Discussion.find params[:id]
-        # @discussion.comments.delete
-        @discussion.delete
-        
-        redirect_to project_discussions_path(@project.id)
-        
+        @discussion.destroy
+        redirect_to project_discussions_path(@project.id), notice: "Discussion Deleted"    
     end
     private
 
@@ -48,7 +61,9 @@ class DiscussionsController < ApplicationController
     end
 
     def authorize_user!
-        redirect_to root_path, alert: 'Not Authorized' unless can?(:crud, @discussion)
+        @project = Project.find params[:project_id]
+        @discussion = Discussion.find params[:id]
+        redirect_to root_path, alert: 'Not Authorized' unless can?(:crud, @discussion) || can?(:crud, @project)
     end
 
 

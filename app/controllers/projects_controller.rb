@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
 
     before_action :authenticate_user!, except: [:index, :show]
-    before_action :authorize_user!,only:[:edit,:update,:destroy]
+    before_action :authorize_user!, only:[:edit,:update,:destroy]
     before_action :find_project, only:[:show, :edit, :update, :destroy]
     def index
         @projects = Project.all.order(created_at: :DESC)
@@ -28,7 +28,10 @@ class ProjectsController < ApplicationController
         @discussion = Discussion.new 
         @discussion.project = @project
         # @discussion.save
-
+        @tasks_pie=@project.tasks.group(:completed)
+        @completed = @tasks_pie.count[true]
+        @inprogress= @tasks_pie.count[false]
+       
     end
 
     def update
@@ -40,8 +43,9 @@ class ProjectsController < ApplicationController
     end
 
     def destroy
-        @project.destroy
-        redirect_to projects_path
+            @project.destroy
+            redirect_to projects_path, notice: "Project Deleted"
+       
     end
 
     private
@@ -54,6 +58,7 @@ class ProjectsController < ApplicationController
     end
 
     def authorize_user!
+        @project = Project.find params[:id]
         redirect_to root_path, alert: 'Not Authorized' unless can?(:crud, @project)
     end
 end

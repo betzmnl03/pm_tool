@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
 
     before_action :authenticate_user!
-    before_action :authorize_user!,only:[:edit,:update,:destroy]
+    before_action :authorize_user!, only:[:edit,:update,:destroy]
 
     before_action :find_project_id, only:[:index, :create, :edit, :update, :destroy]
     def new
@@ -25,7 +25,7 @@ class TasksController < ApplicationController
     end
 
     def edit
-        @task = Task.find params[:id]
+    
     end
     def update
         @task = Task.find params[:id]
@@ -51,7 +51,9 @@ class TasksController < ApplicationController
     end
 
     def authorize_user!
-        redirect_to root_path, alert: 'Not Authorized' unless can?(:crud, @question)
+        find_project_id
+        @task = Task.find params[:id]
+        redirect_to root_path, alert: 'Not Authorized' unless can?(:crud, @task) || can?(:crud, @project) 
     end
 
 end
