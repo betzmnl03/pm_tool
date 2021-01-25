@@ -1,0 +1,41 @@
+<h4>Discussions</h4>
+
+<div class="container">
+<% @discussions.each do |discussion|%>
+
+    <div class="card">
+       
+        <div class="card-body">
+            <div class="d-flex flex-row">
+                    <h4><%= discussion.title%></h4> 
+                    <% if (can? :crud, discussion)||(can? :crud, @project)%>
+                    <small class="ml-4 mt-1"> <%= link_to("Delete", project_discussion_path(@project.id, discussion.id), method: :delete,  class:'text-danger')%></small>
+                    <%end%>
+            </div>
+            <p> <%= discussion.body%></p>
+             <p>Created_by: <%= discussion.user&.full_name%></p>
+            <%= form_with url:discussion_comments_path(discussion.id), method: :post, :class=>"form-group m-4", local: true do |form| %>
+                <%= form.text_field :body, :class=>'form-control', placeholder: "comment here"%>
+                <%=  form.submit "create comment", class:"btn btn-primary" %>
+            <%end%>
+
+            <% discussion.comments.order(created_at: :desc).each do |comment|%>
+                
+                <li><%= comment.body%>
+                <% if (can? :crud, comment) || (can? :crud, @project)%>
+                <small class="ml-4 mt-1"> <%= link_to("Delete", discussion_comment_path(discussion.id, comment.id), method: :delete,  class:'text-danger')%></small>
+                <%end%>
+                </li> 
+            <%end%>
+        </div>
+    </div>
+<% end %>
+</div>
+
+
+
+         
+
+
+
+

@@ -1,0 +1,20 @@
+<div class="container">
+<%= form_with model:[@project,@task], :class=>"form-group m-4", local: true do |form| %>
+            <div class="m-4">
+                <%= label_tag :title%>
+                <%= form.text_field :title, :class=>'form-control'%>
+            </div>
+            <div class="m-4">
+                <%= label_tag :due_date %>
+                <%= form.date_field :due_date%>
+            </div>
+            <div class="m-4">
+                <%= label_tag :status %>
+                <%= form.select :completed, [['Inprogress', false], ['Complete', true]], {}, {class: "form-control"} %>
+            </div>
+            <div class="m-4">
+            <%=form.submit%>
+            </div>
+
+<% end %>
+</div>

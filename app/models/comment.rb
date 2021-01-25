@@ -1,3 +1,4 @@
 class Comment < ApplicationRecord
-    validates :title, presence:true
+  belongs_to :discussion
+  belongs_to :user, optional: true
 end
