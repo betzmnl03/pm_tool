@@ -30,6 +30,7 @@ gem 'bootstrap', '~> 4.5', '>= 4.5.3'
 gem 'cowsay', '~> 0.3.0'
 gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 gem "chartkick"
+gem "font-awesome-rails"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

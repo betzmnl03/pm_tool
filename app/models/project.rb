@@ -6,7 +6,8 @@ class Project < ApplicationRecord
     # validates :title, presence:true, uniqueness:true 
 
 
-
+    has_many :favourites, dependent: :destroy
+    has_many :favouriters, through: :favourites, source: :favourites
         # ASSOCIATION WITH USER MODEL
         belongs_to :user, optional: true
 end

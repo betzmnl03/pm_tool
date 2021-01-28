@@ -31,7 +31,12 @@ class ProjectsController < ApplicationController
         @tasks_pie=@project.tasks.group(:completed)
         @completed = @tasks_pie.count[true]
         @inprogress= @tasks_pie.count[false]
+        @favourite = @project.favourites.find_by_user_id current_user if user_signed_in?
        
+    end
+
+    def favourited
+        @favourites = current_user.favourited_projects.order('favourites.created_at DESC')
     end
 
     def update

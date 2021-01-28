@@ -2,15 +2,26 @@
 <div class="card">
 <div class="card-body d-flex flex-column small">
   <div class="d-flex flex-row">
-          <div class="col-6">
-          <h4><%= @project.title%></h4>
+          <div class="col-8">
+          
+            <h4><%= @project.title%>
+         
+            <% if user_signed_in? && can?(:favourite, @project)%>
+                <% if @favourite.present? %>
+                    <%= link_to '<i class="fa fa-heart m-2"></i>'.html_safe, favourite_path(@favourite), method: :delete %>
+                <% else %>
+                  <%= link_to '<i class="fa fa-heart-o m-2"></i>'.html_safe, project_favourites_path(@project), method: :post %>
+                <% end %>
+            <%end%>
+            </h4>
 
-          <h6>Description: </h6>
+         
+          <h6 class="mt-4 mb-4">Description: </h6>
           <p class="ml-4"><%=@project.description%></p>
-          <p>Due in: <%= distance_of_time_in_words(Date.today,@project.due_date)%></p>
+          <p class="mt-4">Due in: <%= distance_of_time_in_words(Date.today,@project.due_date)%></p>
           </div>
 
-<div class="col-6">
+<div class="col-4">
 <h5 class="text-center">Total Tasks: <%= @tasks.count%></h5>
 <%= pie_chart [['Completed',@completed],['Inprogress',@inprogress]]%>
 </div>

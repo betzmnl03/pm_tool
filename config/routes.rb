@@ -9,12 +9,14 @@ Rails.application.routes.draw do
   resources :projects do
     resources :tasks
     resources :discussions 
+    resources :favourites, shallow: true, only: [:create, :destroy]
+    get :favourited, on: :collection
   end
 
   resources :discussions do
     resources :comments
   end
-
+  # resources :favourites, only:[:create, :destroy]
   resources :users, only:[:new, :create]
   resource :session, only:[:new, :create, :destroy]
 end

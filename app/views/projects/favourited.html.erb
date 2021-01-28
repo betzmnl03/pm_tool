@@ -1,0 +1,7 @@
+<h4 class="mt-4">Your favourite Projects:</h4>
+<ol>
+<% @favourites.each do |favourite|%>
+   <li class="m-4"><%= link_to(favourite.title, project_path(favourite))%>
+   </li>
+<%end%>
+</ol>

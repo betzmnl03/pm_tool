@@ -54,6 +54,14 @@ class Ability
       can(:crud, Comment) do |comment|
         user==comment.user
       end
+
+      can(:favourite, Project) do |project|
+        user.persisted? && project.user != user
+      end
+
+      can(:destroy, Favourite) do |favourite|
+        favourite.user == user
+      end
   
     end
   end
