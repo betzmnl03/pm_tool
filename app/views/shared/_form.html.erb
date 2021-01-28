@@ -22,6 +22,39 @@
              </div>             
              <br>
         </div>
-           <%=form.submit :Submit, class: "btn btn-primary"%>
+        <div>
+            <%= form.collection_check_boxes :tag_ids, Tag.order(name: :asc), :id, :name do |t| %>
+                <%= t.check_box %>
+                <%= t.text %>
             <% end %>
-            <br><br>
+        </div>
+        <div>
+                <%= form.label :add_members  %>  
+                <%= form.text_field :user_first_names  %> 
+        </div>  
+           <%=form.submit :Submit, class: "btn btn-primary"%>
+        <% end %>
+        <br/>
+
+
+<script>
+$(function(){
+    $('#project_user_first_names').selectize({
+        delimeter:',',
+        persist: false,
+        labelField:'first_name', //Coulmn name in db
+        valueField:'first_name',//Coulmn name in db
+        searchField:'first_name',//Coulmn name in db
+        options: <%= User.select(:first_name).to_json(except:[:id]).html_safe %>,
+        // The above line selects only names from tags table and converts them to a json array of objects without including ids and makes sure its a safe_html string
+        // options:[{"name":"first tag"},{"name":"second tag"},{"name":"third tag"},{"name":"fourth tag"},{"name":"fifth tag"}, ....]
+        
+        create :function(input){
+            return{
+                first_name:input
+            }
+        }
+    })
+})
+
+</script>

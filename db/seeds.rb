@@ -5,6 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Member.delete_all
 Favourite.delete_all
 Comment.delete_all
 Discussion.delete_all
@@ -12,6 +13,16 @@ Task.delete_all
 Project.delete_all
 User.delete_all
 NUM = rand(1..10)
+NUM_TAGS=6
+
+NUM_TAGS.times do
+    Tag.create(
+        name:Faker::Vehicle.make
+    )
+end
+
+
+tags = Tag.all
 
 
 PASSWORD='supersecret'
@@ -40,13 +51,16 @@ NUM.times do
     SAMPLE_USER= users.sample
     p = Project.create(
         title: Faker::Commerce.product_name,
-        description:Faker::Commerce.color,
+        description:Faker::TvShows::GameOfThrones.quote,
         due_date: Faker::Date.forward(days: 23),
         created_at: created_at,
         updated_at: created_at,
         user: SAMPLE_USER
     )
     if p.valid?
+        
+            p.favouriters = users.shuffle.slice(0,rand(users.count))
+     
         p.tasks = NUM.times.map do
             Task.new(
                 title: Faker::Verb.base,
@@ -56,6 +70,10 @@ NUM.times do
             )
                 
         end
+
+        p.tags= tags.shuffle.slice(0,rand(tags.count))
+        p.users= users.shuffle.slice(0,rand(users.count))
+        # p.members=
     end
 
     if p.valid?

@@ -62,6 +62,15 @@ class Ability
       can(:destroy, Favourite) do |favourite|
         favourite.user == user
       end
+
+      # can(:member, Project) do |project|
+      #   user.persisted? && project.user !=user
+
+      # end
+
+      # can(:destroy, Member) do |member|
+      #   member.user == user
+      # end
   
     end
   end

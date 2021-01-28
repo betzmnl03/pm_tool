@@ -17,7 +17,25 @@
 
          
           <h6 class="mt-4 mb-4">Description: </h6>
+          
           <p class="ml-4"><%=@project.description%></p>
+          <% if user_signed_in? && can?(:crud, @project)%>
+          <div>
+              Members : 
+              <ol>
+              <% @project.users.each do |user|  %> 
+              <li>
+                <%= user.first_name%></li>
+              <%end%>
+              <ol>
+          </div>
+          <%end%>
+          <div>
+              Tags : 
+              <% @project.tags.each do |tag|  %> 
+                  <%= link_to(tag.name, tag_path(tag.id), class:"bg-light p-1")%>
+              <%end%>
+          </div>
           <p class="mt-4">Due in: <%= distance_of_time_in_words(Date.today,@project.due_date)%></p>
           </div>
 
