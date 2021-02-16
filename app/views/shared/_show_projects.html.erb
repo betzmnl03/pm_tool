@@ -33,7 +33,7 @@
           <div>
               Tags : 
               <% @project.tags.each do |tag|  %> 
-                  <%= link_to(tag.name, tag_path(tag.id), class:"bg-light p-1")%>
+                  <%= link_to(tag.name, tag_path(tag.id))%>
               <%end%>
           </div>
           <p class="mt-4">Due in: <%= distance_of_time_in_words(Date.today,@project.due_date)%></p>

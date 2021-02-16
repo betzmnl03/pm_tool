@@ -28,7 +28,9 @@
     <table class="table table-striped table-sm text-center border small">
   <thead>
     <tr>
+      <th scope="col">#</th>
       <th scope="col">TASKS</th>
+      <th scope="col">Project</th>
       <th scope="col">Due Date</th>
       <th scope="col">Status</th>
       <th scope="col">Created By</th>
@@ -36,9 +38,13 @@
     </tr>
   </thead>
   <tbody>
+   <%i=1%>
   <% @all_tasks.each do |task|%>
     <tr>
+      <td><%=i%></td>
+      <%i+=1%>
       <td><%= task.title%></td>
+      <td><%= link_to(task.project&.title, project_path(task.project&.id))%></td>
       <td><%= task.due_date%></td>
       <%# note alternate distance_of_time_in_words %>
       <%if task.completed%>
