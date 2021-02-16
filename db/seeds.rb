@@ -1,10 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
 Member.delete_all
 Favourite.delete_all
 Comment.delete_all
@@ -21,7 +14,6 @@ NUM_TAGS.times do
     )
 end
 
-
 tags = Tag.all
 
 
@@ -34,7 +26,7 @@ super_user= User.create(
     is_admin: true
 )
 
-10.times do
+4.times do
     first_name= Faker::Name.first_name 
     last_name= Faker::Name.last_name 
     User.create(
@@ -50,7 +42,7 @@ NUM.times do
     created_at = Faker::Date.backward(days: 365*5)
     SAMPLE_USER= users.sample
     p = Project.create(
-        title: Faker::Commerce.product_name,
+        title: Faker::App.name,
         description:Faker::TvShows::GameOfThrones.quote,
         due_date: Faker::Date.forward(days: 23),
         created_at: created_at,
@@ -66,7 +58,9 @@ NUM.times do
                 title: Faker::Verb.base,
                 completed:Faker::Boolean.boolean, 
                 due_date: Faker::Date.forward(days: 60),
-                user: users.sample
+                user: users.sample,
+                assignee: users.sample.first_name
+                # user_first_name: users.sample.first_name
             )
                 
         end

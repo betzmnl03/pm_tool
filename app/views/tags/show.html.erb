@@ -1,9 +1,12 @@
+<div class="container m-4 p-4">
 <h2>All projects related to the tag <%= @tag.name.capitalize%></h2>
 
-
+<ol>
 <% @projects.each do |project|%>
-<div>
+<li>
 <%= link_to(project.title, project_path(project.id))%>
-</div>
+</li>
 <%end%>
+<ol>
+</div>
 

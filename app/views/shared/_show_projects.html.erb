@@ -65,6 +65,9 @@
       <th scope="col">Created Date</th>
       <th scope="col">Due Date</th>
       <th scope="col">Status</th>
+      <th scope="col">Created By</th>
+       <th scope="col">Assignee</th>
+      <th scope="col">Action</th>
       <th></th>
     </tr>
   </thead>
@@ -80,6 +83,8 @@
       <%else%>
       <td>Inprogress </td>
       <%end%>
+       <td><%= task.user&.full_name %></td>
+       <td><%= task.assignee%></td>
       <td><small>
       <% if (can? :crud, task) || (can? :crud, @project)%>
         <%= link_to("Edit", edit_project_task_path(@project, task))%>
@@ -89,7 +94,7 @@
         <%= link_to("Delete", project_task_path(@project, task), method: :delete, class:'text-danger') %>
         </small></td>
       <%end%>
-      <td>Created_by: <%= task.user&.full_name %></td>
+     
      
     </tr>
 

@@ -2,19 +2,43 @@
 <%= form_with model:[@project,@task], :class=>"form-group m-4", local: true do |form| %>
             <div class="m-4">
                 <%= label_tag :title%>
-                <%= form.text_field :title, :class=>'form-control'%>
+                <%= form.text_field :title, :class=>'form-control', :required=>"true"%>
             </div>
             <div class="m-4">
                 <%= label_tag :due_date %>
-                <%= form.date_field :due_date%>
+                <%= form.date_field :due_date, :required=>"true"%>
             </div>
             <div class="m-4">
                 <%= label_tag :status %>
-                <%= form.select :completed, [['Inprogress', false], ['Complete', true]], {}, {class: "form-control"} %>
+                <%= form.select :completed, [['Inprogress', false], ['Complete', true]], {}, {class: "form-control"}%>
             </div>
+
+                <div>
+                <%= form.label :assignee %>  
+                <%= form.text_field :assignee  %> 
+                </div> 
             <div class="m-4">
             <%=form.submit%>
             </div>
 
 <% end %>
 </div>
+
+<script>
+$(function(){
+    $('#task_assignee').selectize({
+        delimeter:',',
+        persist: false,
+        labelField:'first_name', 
+        valueField:'first_name',
+        searchField:'first_name',
+        options: <%= User.select(:first_name).to_json(except:[:id]).html_safe %>,
+        create :function(input){
+            return{
+                first_name:input
+            }
+        }
+    })
+})
+
+</script>

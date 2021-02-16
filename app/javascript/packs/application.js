@@ -14,7 +14,7 @@ import './selectize'
 require("chartkick")
 require("chart.js")
 
-
+import "bootstrap"
 
 window.jQuery=$;
 window.$=$;

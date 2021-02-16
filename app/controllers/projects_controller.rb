@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
 
-    before_action :authenticate_user!, except: [:index, :show]
+    before_action :authenticate_user!, except: [:index]
     before_action :authorize_user!, only:[:edit,:update,:destroy]
     before_action :find_project, only:[:show, :edit, :update, :destroy]
     def index
@@ -9,6 +9,27 @@ class ProjectsController < ApplicationController
 
     def new
         @project = Project.new
+    end
+
+    def myprojects
+        @user_projects=[]
+        puts current_user.full_name
+       @projects = Project.all
+       @projects.each do |project|
+            if(project.user.full_name ==current_user.full_name)
+                @user_projects.push(project)
+            end
+        end
+        @tasks = Task.all.order(due_date: :ASC)
+        @all_tasks=[]
+        @tasks.each do |task|
+            assignees = task.assignee.split(",")
+            assignees.each do |name|
+                if(name == current_user.first_name)
+                    @all_tasks.push(task)
+                end
+            end
+        end
     end
 
     def create
@@ -32,7 +53,7 @@ class ProjectsController < ApplicationController
         @completed = @tasks_pie.count[true]
         @inprogress= @tasks_pie.count[false]
         @favourite = @project.favourites.find_by_user_id current_user if user_signed_in?
-       
+
     end
 
     def favourited

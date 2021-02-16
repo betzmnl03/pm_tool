@@ -11,15 +11,12 @@
   </head>
 
   <body>
-  <div class="container">
+  <div class="container main border">
   <%= render "shared/navbar"%>
+  <%= render"/shared/alert"%>
     <%= yield %>
 
    </div> 
-
-   <small class="primary">
-   <%= flash[:notice] || flash[:alert] %>
-   </small>
   </body>
   
 </html>

@@ -1,0 +1,16 @@
+@import "bootstrap";
+
+.card.index{
+    height: 20vh;
+}
+.card.new{
+    border: 1px dashed blue !important;
+    position:relative;
+    left: 25em;
+}
+.card.all.index a{
+    color: white !important;
+}
+.container.main{
+    height: 100%;
+}

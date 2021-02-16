@@ -1,9 +1,11 @@
+<div class="container m-4 p-4">
 <h1>All Tags</h1>
-<div >
+<ol>
     <%@tags.each do |tag|%>
-    <p>
+    <li>
         <%= link_to(tag.name.capitalize, tag_path(tag.id))%>
-    </p>
+    </li>
     <%end%>
     
+</ol>
 </div>
