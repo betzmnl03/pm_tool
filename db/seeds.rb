@@ -7,10 +7,10 @@ Project.delete_all
 User.delete_all
 NUM = rand(1..10)
 NUM_TAGS=6
-
+tag=["Management","Hospitality","finance", "Healthcare"]
 NUM_TAGS.times do
     Tag.create(
-        name:Faker::Vehicle.make
+        name:tag.sample
     )
 end
 
